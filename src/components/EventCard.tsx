@@ -53,13 +53,13 @@ export const EventCard = ({ event, onBookmark, onViewDetails, isBookmarked = fal
 
   return (
     <div 
-      className="bg-gradient-card border border-border rounded-2xl p-5 shadow-card hover:shadow-elevated transition-all duration-300 cursor-pointer animate-slide-up"
+      className="bg-gradient-card border border-border rounded-2xl p-3 shadow-card hover:shadow-elevated transition-all duration-300 cursor-pointer animate-slide-up"
       onClick={handleViewDetails}
     >
       {/* Header with title and bookmark */}
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between mb-2">
         <div className="flex-1">
-          <h3 className="font-semibold text-lg text-foreground leading-tight mb-1">
+          <h3 className="font-semibold text-lg text-foreground leading-tight">
             {event.title}
           </h3>
         </div>
@@ -75,24 +75,24 @@ export const EventCard = ({ event, onBookmark, onViewDetails, isBookmarked = fal
       </div>
 
       {/* Event details */}
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {/* Lecturer */}
         <p className="text-sm text-muted-foreground">{event.referent}</p>
         
-        {/* Time and Location */}
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
-          <div className="flex items-center space-x-2">
+        {/* Time and Location - stacked vertically */}
+        <div className="flex flex-col space-y-1">
+          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
             <Clock size={16} className="text-primary" />
             <span className="font-medium">{event.time}</span>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
             <MapPin size={16} className="text-primary" />
             <span>{event.location}</span>
           </div>
         </div>
 
         {/* Gender and Language */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pt-1">
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-1 text-sm text-muted-foreground">
               {getGenderIcon()}
