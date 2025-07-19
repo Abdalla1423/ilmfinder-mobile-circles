@@ -75,17 +75,20 @@ export const EventCard = ({ event, onBookmark, onViewDetails, isBookmarked = fal
       </div>
 
       {/* Event details */}
-      <div className="space-y-3">
-        {/* Time */}
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <Clock size={16} className="text-primary" />
-          <span className="font-medium">{event.time}</span>
-        </div>
-
-        {/* Location */}
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <MapPin size={16} className="text-primary" />
-          <span>{event.location}</span>
+      <div className="space-y-2">
+        {/* Lecturer */}
+        <p className="text-sm text-muted-foreground">{event.referent}</p>
+        
+        {/* Time and Location */}
+        <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex items-center space-x-2">
+            <Clock size={16} className="text-primary" />
+            <span className="font-medium">{event.time}</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <MapPin size={16} className="text-primary" />
+            <span>{event.location}</span>
+          </div>
         </div>
 
         {/* Gender and Language */}
