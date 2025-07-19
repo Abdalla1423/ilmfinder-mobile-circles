@@ -1,4 +1,4 @@
-import { Heart, Clock, MapPin, Users, Info } from "lucide-react";
+import { Heart, Clock, MapPin, Users, Info, UserCheck, UserX, Users2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
@@ -15,6 +15,7 @@ interface Event {
   attendees?: number;
   maxAttendees?: number;
   category: string;
+  genderType?: "men" | "women" | "mixed";
 }
 
 interface EventCardProps {
@@ -37,6 +38,19 @@ export const EventCard = ({ event, onBookmark, onViewDetails, isBookmarked = fal
     onViewDetails?.(event);
   };
 
+  const getGenderIcon = () => {
+    switch (event.genderType) {
+      case "men":
+        return <UserCheck size={16} className="text-primary" />;
+      case "women":
+        return <UserX size={16} className="text-primary" />;
+      case "mixed":
+        return <Users2 size={16} className="text-primary" />;
+      default:
+        return <Users2 size={16} className="text-primary" />;
+    }
+  };
+
   return (
     <div 
       className="bg-gradient-card border border-border rounded-2xl p-5 shadow-card hover:shadow-elevated transition-all duration-300 cursor-pointer animate-slide-up"
@@ -48,9 +62,6 @@ export const EventCard = ({ event, onBookmark, onViewDetails, isBookmarked = fal
           <h3 className="font-semibold text-lg text-foreground leading-tight mb-1">
             {event.title}
           </h3>
-          <p className="text-sm text-muted-foreground">
-            {event.description} • {event.referent}
-          </p>
         </div>
         
         <Button
@@ -65,12 +76,10 @@ export const EventCard = ({ event, onBookmark, onViewDetails, isBookmarked = fal
 
       {/* Event details */}
       <div className="space-y-3">
-        {/* Time and Date */}
+        {/* Time */}
         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
           <Clock size={16} className="text-primary" />
           <span className="font-medium">{event.time}</span>
-          <span>•</span>
-          <span>{event.date}</span>
         </div>
 
         {/* Location */}
@@ -79,26 +88,18 @@ export const EventCard = ({ event, onBookmark, onViewDetails, isBookmarked = fal
           <span>{event.location}</span>
         </div>
 
-        {/* Attendees and language badges */}
+        {/* Gender and Language */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            {event.attendees && (
-              <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-                <Users size={16} className="text-primary" />
-                <span>{event.attendees}{event.maxAttendees ? `/${event.maxAttendees}` : ''}</span>
-              </div>
-            )}
-            
-            <div className="flex space-x-2">
-              <Badge variant="secondary" className="text-xs">
-                {event.category}
-              </Badge>
-              {event.isGerman && (
-                <Badge variant="outline" className="text-xs">
-                  De
-                </Badge>
-              )}
+            <div className="flex items-center space-x-1 text-sm text-muted-foreground">
+              {getGenderIcon()}
             </div>
+            
+            {event.isGerman && (
+              <Badge variant="outline" className="text-xs">
+                De
+              </Badge>
+            )}
           </div>
 
           <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80">

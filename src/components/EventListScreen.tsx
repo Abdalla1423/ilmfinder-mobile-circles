@@ -16,6 +16,7 @@ interface Event {
   attendees?: number;
   maxAttendees?: number;
   category: string;
+  genderType?: "men" | "women" | "mixed";
 }
 
 interface EventListScreenProps {
@@ -30,11 +31,12 @@ const sampleEvents: Event[] = [
     referent: "Bruder Hojan",
     time: "17:00",
     date: "Today",
-    location: "Perleberger Straße 42",
+    location: "Perleberger Straße",
     isGerman: true,
     attendees: 12,
     maxAttendees: 20,
-    category: "Study Circle"
+    category: "Study Circle",
+    genderType: "men" // men, women, or mixed
   },
   {
     id: "2",
@@ -47,7 +49,8 @@ const sampleEvents: Event[] = [
     isGerman: true,
     attendees: 8,
     maxAttendees: 15,
-    category: "Study Circle"
+    category: "Study Circle",
+    genderType: "men"
   },
   {
     id: "3",
@@ -60,7 +63,8 @@ const sampleEvents: Event[] = [
     isGerman: true,
     attendees: 15,
     maxAttendees: 25,
-    category: "Halaqah"
+    category: "Halaqah",
+    genderType: "mixed"
   },
   {
     id: "4",
@@ -73,7 +77,8 @@ const sampleEvents: Event[] = [
     isGerman: true,
     attendees: 10,
     maxAttendees: 18,
-    category: "Study Circle"
+    category: "Study Circle",
+    genderType: "women"
   }
 ];
 
@@ -125,20 +130,29 @@ export const EventListScreen = ({ onEventSelect }: EventListScreenProps) => {
         </div>
       </div>
 
-      {/* Quick Filters */}
+      {/* Weekday Filters */}
       <div className="p-6 pb-4">
         <div className="flex space-x-3 overflow-x-auto pb-2">
-          <Button variant="islamic" size="sm" className="flex-shrink-0">
-            Today
+          <Button variant="islamic" size="sm" className="flex-shrink-0 rounded-full">
+            Mo
           </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0">
-            This Week
+          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
+            Tu
           </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0">
-            Study Circles
+          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
+            We
           </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0">
-            Lectures
+          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
+            Th
+          </Button>
+          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
+            Fr
+          </Button>
+          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
+            Sa
+          </Button>
+          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
+            Su
           </Button>
         </div>
       </div>
