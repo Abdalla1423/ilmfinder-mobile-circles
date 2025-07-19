@@ -1,4 +1,4 @@
-import { Heart, Clock, MapPin, Users, Info } from "lucide-react";
+import { Heart, Clock, MapPin, Users, User, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
@@ -15,6 +15,9 @@ interface Event {
   attendees?: number;
   maxAttendees?: number;
   category: string;
+  gender?: {
+    type: 'men' | 'women' | 'mixed';
+  };
 }
 
 interface EventCardProps {
@@ -37,73 +40,85 @@ export const EventCard = ({ event, onBookmark, onViewDetails, isBookmarked = fal
     onViewDetails?.(event);
   };
 
+  const getGenderIcon = () => {
+    if (!event.gender) return <Users size={16} className="text-sky-500" />;
+    
+    switch (event.gender.type) {
+      case 'men':
+        return <User size={16} className="text-sky-500" />;
+      case 'women':
+        return <UserCheck size={16} className="text-sky-500" />;
+      case 'mixed':
+        return <Users size={16} className="text-sky-500" />;
+      default:
+        return <Users size={16} className="text-sky-500" />;
+    }
+  };
+
   return (
     <div 
-      className="bg-gradient-card border border-border rounded-2xl p-5 shadow-card hover:shadow-elevated transition-all duration-300 cursor-pointer animate-slide-up"
+      className="relative bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer animate-slide-up"
       onClick={handleViewDetails}
     >
+      {/* Sky blue accent stripe */}
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-sky-400 rounded-l-2xl" />
+      
       {/* Header with title and bookmark */}
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
-          <h3 className="font-semibold text-lg text-foreground leading-tight mb-1">
+          <h3 className="font-bold text-lg text-gray-800 leading-tight mb-1">
             {event.title}
           </h3>
-          <p className="text-sm text-muted-foreground">
-            {event.description} • {event.referent}
-          </p>
         </div>
         
         <Button
           variant="ghost"
           size="icon"
           onClick={handleBookmark}
-          className={`ml-2 flex-shrink-0 ${bookmarked ? 'text-red-500' : 'text-muted-foreground'} hover:text-red-500`}
+          className={`ml-2 flex-shrink-0 ${bookmarked ? 'text-sky-500' : 'text-gray-500'} hover:text-sky-500 border border-gray-300 rounded-lg`}
         >
-          <Heart size={20} className={bookmarked ? 'fill-current' : ''} />
+          <Heart size={18} className={bookmarked ? 'fill-current' : ''} />
         </Button>
       </div>
 
       {/* Event details */}
       <div className="space-y-3">
-        {/* Time and Date */}
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <Clock size={16} className="text-primary" />
-          <span className="font-medium">{event.time}</span>
-          <span>•</span>
-          <span>{event.date}</span>
-        </div>
-
-        {/* Location */}
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <MapPin size={16} className="text-primary" />
-          <span>{event.location}</span>
-        </div>
-
-        {/* Attendees and language badges */}
+        {/* Time and Location */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            {event.attendees && (
-              <div className="flex items-center space-x-1 text-sm text-muted-foreground">
-                <Users size={16} className="text-primary" />
-                <span>{event.attendees}{event.maxAttendees ? `/${event.maxAttendees}` : ''}</span>
+          <div className="flex items-center space-x-2 text-sm text-gray-500">
+            <Clock size={16} className="text-sky-500" />
+            <span className="font-medium">{event.time}</span>
+          </div>
+          <div className="flex items-center space-x-2 text-sm text-gray-500">
+            <MapPin size={16} className="text-sky-500" />
+            <span className="truncate max-w-32">{event.location}</span>
+          </div>
+        </div>
+
+        {/* Metadata chips */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            {/* Gender and Language badges */}
+            <div className="flex items-center space-x-1 bg-gray-100 rounded-full px-3 py-1">
+              {getGenderIcon()}
+              <span className="text-xs text-gray-600 ml-1">
+                {event.gender?.type === 'men' ? 'Men' : event.gender?.type === 'women' ? 'Women' : 'Mixed'}
+              </span>
+            </div>
+            
+            {event.isGerman && (
+              <div className="bg-gray-100 rounded-full px-3 py-1">
+                <span className="text-xs text-gray-600">DE</span>
               </div>
             )}
-            
-            <div className="flex space-x-2">
-              <Badge variant="secondary" className="text-xs">
-                {event.category}
-              </Badge>
-              {event.isGerman && (
-                <Badge variant="outline" className="text-xs">
-                  De
-                </Badge>
-              )}
-            </div>
           </div>
 
-          <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80">
-            <Info size={16} />
-          </Button>
+          {event.attendees && (
+            <div className="flex items-center space-x-1 text-sm text-gray-500 bg-gray-100 rounded-full px-3 py-1">
+              <Users size={14} className="text-sky-500" />
+              <span className="text-xs">{event.attendees}{event.maxAttendees ? `/${event.maxAttendees}` : ''}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
