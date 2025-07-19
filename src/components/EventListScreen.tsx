@@ -22,66 +22,58 @@ interface EventListScreenProps {
   onEventSelect: (event: Event) => void;
 }
 
-interface EventGender {
-  type: 'men' | 'women' | 'mixed';
-}
-
-const sampleEvents: (Event & { gender: EventGender })[] = [
+const sampleEvents: Event[] = [
   {
     id: "1",
     title: "MJB Brüderkreis",
-    description: "",
-    referent: "",
+    description: "Die Fitna des Dajjal",
+    referent: "Bruder Hojan",
     time: "17:00",
     date: "Today",
     location: "Perleberger Straße 42",
     isGerman: true,
     attendees: 12,
     maxAttendees: 20,
-    category: "Study Circle",
-    gender: { type: 'men' }
+    category: "Study Circle"
   },
   {
     id: "2",
     title: "IJB Brüderkreis",
-    description: "",
-    referent: "",
+    description: "Die Fitna des Dajjal",
+    referent: "Bruder Hojan",
     time: "18:00",
     date: "Today",
     location: "Muslimische Jugend Berlin",
     isGerman: true,
     attendees: 8,
     maxAttendees: 15,
-    category: "Study Circle",
-    gender: { type: 'men' }
+    category: "Study Circle"
   },
   {
     id: "3",
     title: "Badr Moschee Halaqah",
-    description: "",
-    referent: "",
+    description: "Die Fitna des Dajjal",
+    referent: "Bruder Hojan",
     time: "18:00",
     date: "Tomorrow",
     location: "Badr Moschee",
     isGerman: true,
     attendees: 15,
     maxAttendees: 25,
-    category: "Halaqah",
-    gender: { type: 'mixed' }
+    category: "Halaqah"
   },
   {
     id: "4",
     title: "IJB Schwesternkreis",
-    description: "",
-    referent: "",
+    description: "Die Fitna des Dajjal",
+    referent: "Bruder Hojan",
     time: "19:00",
     date: "Friday",
     location: "Muslimische Jugend Berlin",
     isGerman: true,
     attendees: 10,
     maxAttendees: 18,
-    category: "Study Circle",
-    gender: { type: 'women' }
+    category: "Study Circle"
   }
 ];
 
@@ -133,29 +125,20 @@ export const EventListScreen = ({ onEventSelect }: EventListScreenProps) => {
         </div>
       </div>
 
-      {/* Weekday Filters */}
+      {/* Quick Filters */}
       <div className="p-6 pb-4">
         <div className="flex space-x-3 overflow-x-auto pb-2">
-          <Button variant="islamic" size="sm" className="flex-shrink-0 rounded-full">
-            Mon
+          <Button variant="islamic" size="sm" className="flex-shrink-0">
+            Today
           </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
-            Tue
+          <Button variant="outline" size="sm" className="flex-shrink-0">
+            This Week
           </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
-            Wed
+          <Button variant="outline" size="sm" className="flex-shrink-0">
+            Study Circles
           </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
-            Thu
-          </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
-            Fri
-          </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
-            Sat
-          </Button>
-          <Button variant="outline" size="sm" className="flex-shrink-0 rounded-full">
-            Sun
+          <Button variant="outline" size="sm" className="flex-shrink-0">
+            Lectures
           </Button>
         </div>
       </div>
